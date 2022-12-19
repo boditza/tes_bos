@@ -1,0 +1,9 @@
+#Here we specify the hosts on which we need to deploy the docker image. 
+#In my case it is the local one but multiple can be added, also grouped on clusters.
+#I chose local since I do not have any cloud available resources
+
+[allhosts]
+localhost
+
+[deploymenthosts]
+localhost ansible_port=3000

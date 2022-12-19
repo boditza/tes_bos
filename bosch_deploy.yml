@@ -1,0 +1,34 @@
+---
+
+- hosts: all #Deploy on all hosts mentioned in the inventory hosts file
+  become: yes #Elevated permissions
+  become_user: root
+  tasks:
+  - name: install required packages
+    yum:
+      name:  #packages that will need to be installed
+        - yum-utils
+        - yum-config-manager
+        - docker-ce
+        - docker-ce-cli
+        - container.io
+        - docker-compose-plugin
+        - git
+        - openssh-server
+        - python3-pip
+        - python3-setuptools
+      state: latest #latest version of the packages to be installed
+      update_cache: true
+      
+  - name: Show yum install status #display the status of the previous 
+    debug:
+      msg: "{{ yum_result.results }}"
+
+      
+      
+  - name: deploy BOSCH Todo #deployment of the docker TODO app
+    docker_container:
+      image: getting-started:latest
+      name: Todo
+      state: started
+      auto_remove: true
